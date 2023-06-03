@@ -54,17 +54,18 @@ pdf(
     }
 
     # Left
-    contour(
-        w0,
-        theta0,
-        PM,
+    contour( # Create a contour plot, or add contour lines to an existing plot.
+        x = w0,
+        y = theta0,
+        z = PM, # a matrix
         xlab = expression(italic(w)),
         ylab = expression(theta[0])
     )
+    # Right
     contour(
-        w0,
-        theta0,
-        PP10,
+        x = w0,
+        y = theta0,
+        z = PP10, # a matrix
         xlab = expression(italic(w)),
         levels = c(0.1, 0.3, 0.5, 0.70, 0.90, 0.975)
     )
