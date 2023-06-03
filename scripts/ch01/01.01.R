@@ -34,9 +34,9 @@ print("If Y|theta ~ binomial(n, theta) and theta ~ beta(a, b)")
 print("theta|{Y=y} ~ beta(a + y, b + n - y)")
 print("If y = 0 then theta|{Y=0} ~ beta(2, 40)")
 # mean of theta|{Y=0} ~ beta(a + y, b + n - y), the posterior distribution
-sprintf("Mean of theta|{Y=0} ~ beta(2+0, 20+20-0):          %.5f", a / (a + b + n)) # [1] 0.04761905
+sprintf("Mean of theta|{Y=0} ~ beta(2+0, 20+20-0):          %.5f", (a + y) / ((a + y) + (b + n - y))) # [1] 0.04761905
 # mode of theta|{Y=0} ~ beta(a + y, b + n - y), the posterior distribution
-sprintf("Mode of theta|{Y=0} ~ beta(2+0, 20+20-0):          %.5f", (a + y - 1) / ((a - 1) + (b + n - 1))) # [1] 0.025
+sprintf("Mode of theta|{Y=0} ~ beta(2+0, 20+20-0):          %.5f", (a + y - 1) / ((a + y - 1) + (b + n - y - 1))) # [1] 0.025
 # p(theta < 0.10|Y=0), the posterior distribution
 sprintf("p(theta < 0.10|{Y=0}) ~ beta(2+0, 20+20-0):        %.5f", pbeta(0.10, a + y, b + n - y)) # [1] 0.9260956 93%
 # p(0.05 < theta < 0.20|Y=0), the posterior distribution
