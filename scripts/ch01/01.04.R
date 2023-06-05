@@ -35,20 +35,36 @@ y.test <- yf[i.test]
 X <- Xf[i.train,]
 X.test <- Xf[i.test,]
 
+save(
+    y,
+    y.test,
+    X,
+    X.test,
+    file = file.path(dataDir, "ch01", "diabetes-Xytest.RData")
+)
+
 
 ## MCMC for BMA
 p <- dim(X)[2]
 S <- 10000
+
 source(
     file.path("ch01", "regression_gprior.R")
 )
 
 runmcmc <-
-    !any(
-        system("ls", intern = TRUE) == file.path(dataDir, "ch01", "diabetesBMA.RData")
+    any( # Given a set of logical vectors, is at least one of the values true?
+        # system() invokes the OS command specified by `command`
+        # intern: a logical (not `NA`) which indicates whether to capture the output of the comand as an R character vector.
+        system("ls ../data/ch01", intern = TRUE) == "diabetesBMA.RData"
     )
+cat(runmcmc)
 
-if (runmcmc) {
+if (runmcmc == TRUE) {
+    load(
+        file.path(dataDir, "ch01", "diabetesBMA.RData")
+    )
+} else {
     BETA <- Z <- matrix(NA, S, p)
     z <- rep(1, dim(X)[2])
     lpy.c <- lpy.X(y, X[, z == 1, drop = FALSE])
@@ -60,7 +76,7 @@ if (runmcmc) {
             zp[j] <- 1 - zp[j]
             lpy.p <- lpy.X(y, X[, zp == 1, drop = FALSE])
             r <- (lpy.p - lpy.c) * (-1)^(zp[j] == 0)
-            z[j] <-- rbinom(1, 1, 1 / (1 + exp(-r)))
+            z[j] <- rbinom(1, 1, 1 / (1 + exp(-r)))
             if (z[j] == zp[j]) {
                 lpy.c <- lpy.p
             }
@@ -79,6 +95,8 @@ if (runmcmc) {
     save(
         BETA,
         Z,
+        y.test,
+        X.test,
         file = file.path(dataDir, "ch01", "diabetesBMA-edited.RData")
     )
 }
