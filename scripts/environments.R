@@ -20,6 +20,12 @@ figDir <- file.path(outDir, "figures")
 if (!dir.exists(figDir)) {
     dir.create(figDir)
 }
+if (!dir.exists(file.path(figDir, "ch01"))) {
+    dir.create(file.path(figDir, "ch01"), recursive = TRUE)
+}
 if (!dir.exists(file.path(figDir, "ch02"))) {
     dir.create(file.path(figDir, "ch02"), recursive = TRUE)
+}
+if (!dir.exists(file.path(figDir, "ch03"))) {
+    dir.create(file.path(figDir, "ch03"), recursive = TRUE)
 }
